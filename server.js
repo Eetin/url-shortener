@@ -7,13 +7,15 @@ var path = require('path')
 var app = express()
 
 mongoose.Promise = global.Promise
-mongoose.connect('mongodb://localhost/urlshortener')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/urlshortener')
 
 var Schema = mongoose.Schema
     
 var urlSchema = new Schema({
     original_url: { type: String, required: true, unique: true },
     short_url   : { type: String, required: true, unique: true }
+}, {
+    capped: { size: 5500000, max: 5000 }
 })
 
 var Url = mongoose.model('Url', urlSchema)
