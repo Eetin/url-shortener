@@ -79,7 +79,7 @@ app.get('/shorten/:url*', function(req, res) {
             }
         })
     } else {
-        res.end('Invalid URL')
+        res.json({ error: 'Invalid URL. Valid URL must include protocol (e.g. https://www.google.com)' })
     }
 })
 
